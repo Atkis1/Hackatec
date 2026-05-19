@@ -1,0 +1,10 @@
+node_modules/
+# Datos del usuario (edificios, medición, zonas) — no se sobrescriben al actualizar el repo
+data/user/
+.env
+.env.*
+!.env.example
+dist/
+coverage/
+*.log
+.DS_Store

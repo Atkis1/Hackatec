@@ -1,0 +1,312 @@
+{
+  "activeId": "site-hotel-centro",
+  "buildings": [
+    {
+      "id": "site-hotel-centro",
+      "name": "Mi edificio",
+      "type": "hotel",
+      "measurementMode": "rooms",
+      "kwhPerRoomPerDay": 28,
+      "kwhPerSqmPerDay": 1.15,
+      "tariff": 3.2,
+      "appliances": [
+        "hvac",
+        "lighting",
+        "elevators",
+        "kitchen",
+        "laundry"
+      ],
+      "floors": [
+        {
+          "id": "p1",
+          "name": "Piso 1 – Lobby y recepción",
+          "hasRooms": false,
+          "roomCount": 0,
+          "sqm": 1200,
+          "areas": [
+            {
+              "id": "p1-zona",
+              "name": "Piso 1 – Lobby y recepción",
+              "type": "room"
+            }
+          ]
+        },
+        {
+          "id": "p2",
+          "name": "Piso 2 – Habitaciones 201-210",
+          "hasRooms": true,
+          "roomCount": 10,
+          "sqm": 980,
+          "areas": [
+            {
+              "id": "p2-hab-1",
+              "name": "Piso 2 – Habitaciones 201-210 – Hab. 1",
+              "type": "room"
+            },
+            {
+              "id": "p2-hab-2",
+              "name": "Piso 2 – Habitaciones 201-210 – Hab. 2",
+              "type": "room"
+            },
+            {
+              "id": "p2-hab-3",
+              "name": "Piso 2 – Habitaciones 201-210 – Hab. 3",
+              "type": "room"
+            },
+            {
+              "id": "p2-hab-4",
+              "name": "Piso 2 – Habitaciones 201-210 – Hab. 4",
+              "type": "room"
+            },
+            {
+              "id": "p2-hab-5",
+              "name": "Piso 2 – Habitaciones 201-210 – Hab. 5",
+              "type": "room"
+            },
+            {
+              "id": "p2-hab-6",
+              "name": "Piso 2 – Habitaciones 201-210 – Hab. 6",
+              "type": "room"
+            },
+            {
+              "id": "p2-hab-7",
+              "name": "Piso 2 – Habitaciones 201-210 – Hab. 7",
+              "type": "room"
+            },
+            {
+              "id": "p2-hab-8",
+              "name": "Piso 2 – Habitaciones 201-210 – Hab. 8",
+              "type": "room"
+            },
+            {
+              "id": "p2-hab-9",
+              "name": "Piso 2 – Habitaciones 201-210 – Hab. 9",
+              "type": "room"
+            },
+            {
+              "id": "p2-hab-10",
+              "name": "Piso 2 – Habitaciones 201-210 – Hab. 10",
+              "type": "room"
+            }
+          ]
+        },
+        {
+          "id": "p3",
+          "name": "Piso 3 – Habitaciones 301-310",
+          "hasRooms": true,
+          "roomCount": 10,
+          "sqm": 980,
+          "areas": [
+            {
+              "id": "p3-hab-1",
+              "name": "Piso 3 – Habitaciones 301-310 – Hab. 1",
+              "type": "room"
+            },
+            {
+              "id": "p3-hab-2",
+              "name": "Piso 3 – Habitaciones 301-310 – Hab. 2",
+              "type": "room"
+            },
+            {
+              "id": "p3-hab-3",
+              "name": "Piso 3 – Habitaciones 301-310 – Hab. 3",
+              "type": "room"
+            },
+            {
+              "id": "p3-hab-4",
+              "name": "Piso 3 – Habitaciones 301-310 – Hab. 4",
+              "type": "room"
+            },
+            {
+              "id": "p3-hab-5",
+              "name": "Piso 3 – Habitaciones 301-310 – Hab. 5",
+              "type": "room"
+            },
+            {
+              "id": "p3-hab-6",
+              "name": "Piso 3 – Habitaciones 301-310 – Hab. 6",
+              "type": "room"
+            },
+            {
+              "id": "p3-hab-7",
+              "name": "Piso 3 – Habitaciones 301-310 – Hab. 7",
+              "type": "room"
+            },
+            {
+              "id": "p3-hab-8",
+              "name": "Piso 3 – Habitaciones 301-310 – Hab. 8",
+              "type": "room"
+            },
+            {
+              "id": "p3-hab-9",
+              "name": "Piso 3 – Habitaciones 301-310 – Hab. 9",
+              "type": "room"
+            },
+            {
+              "id": "p3-hab-10",
+              "name": "Piso 3 – Habitaciones 301-310 – Hab. 10",
+              "type": "room"
+            }
+          ]
+        },
+        {
+          "id": "p4",
+          "name": "Piso 4 – Salas y servicios",
+          "hasRooms": false,
+          "roomCount": 0,
+          "sqm": 850,
+          "areas": [
+            {
+              "id": "p4-zona",
+              "name": "Piso 4 – Salas y servicios",
+              "type": "room"
+            }
+          ]
+        }
+      ],
+      "measurement": {
+        "active": true,
+        "startedAt": "2026-05-19T03:50:09.447Z",
+        "lastResetAt": "2026-05-19T03:50:09.447Z",
+        "lastScheduledDate": null,
+        "schedule": {
+          "enabled": false,
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "startTime": "08:00",
+          "endTime": "20:00"
+        }
+      }
+    },
+    {
+      "id": "bld-mpc299au-dsigj",
+      "name": "Edificio gay",
+      "type": "hotel",
+      "measurementMode": "rooms",
+      "kwhPerRoomPerDay": 28.7,
+      "kwhPerSqmPerDay": 1.15,
+      "tariff": 3.2,
+      "appliances": [
+        "hvac",
+        "lighting",
+        "elevators",
+        "kitchen",
+        "laundry",
+        "pool"
+      ],
+      "floors": [
+        {
+          "id": "p1",
+          "name": "Piso 1",
+          "hasRooms": true,
+          "roomCount": 6,
+          "sqm": 800,
+          "areas": [
+            {
+              "id": "p1-hab-1",
+              "name": "Piso 1 – Hab. 1",
+              "type": "room"
+            },
+            {
+              "id": "p1-hab-2",
+              "name": "Piso 1 – Hab. 2",
+              "type": "room"
+            },
+            {
+              "id": "p1-hab-3",
+              "name": "Piso 1 – Hab. 3",
+              "type": "room"
+            },
+            {
+              "id": "p1-hab-4",
+              "name": "Piso 1 – Hab. 4",
+              "type": "room"
+            },
+            {
+              "id": "p1-hab-5",
+              "name": "Piso 1 – Hab. 5",
+              "type": "room"
+            },
+            {
+              "id": "p1-hab-6",
+              "name": "Piso 1 – Hab. 6",
+              "type": "room"
+            }
+          ]
+        },
+        {
+          "id": "p93hh",
+          "name": "Piso 2",
+          "hasRooms": true,
+          "roomCount": 8,
+          "sqm": 600,
+          "areas": [
+            {
+              "id": "p93hh-hab-1",
+              "name": "Piso 2 – Hab. 1",
+              "type": "room"
+            },
+            {
+              "id": "p93hh-hab-2",
+              "name": "Piso 2 – Hab. 2",
+              "type": "room"
+            },
+            {
+              "id": "p93hh-hab-3",
+              "name": "Piso 2 – Hab. 3",
+              "type": "room"
+            },
+            {
+              "id": "p93hh-hab-4",
+              "name": "Piso 2 – Hab. 4",
+              "type": "room"
+            },
+            {
+              "id": "p93hh-hab-5",
+              "name": "Piso 2 – Hab. 5",
+              "type": "room"
+            },
+            {
+              "id": "p93hh-hab-6",
+              "name": "Piso 2 – Hab. 6",
+              "type": "room"
+            },
+            {
+              "id": "p93hh-hab-7",
+              "name": "Piso 2 – Hab. 7",
+              "type": "room"
+            },
+            {
+              "id": "p93hh-hab-8",
+              "name": "Piso 2 – Hab. 8",
+              "type": "room"
+            }
+          ]
+        }
+      ],
+      "measurement": {
+        "active": true,
+        "startedAt": null,
+        "lastResetAt": null,
+        "lastScheduledDate": null,
+        "schedule": {
+          "enabled": false,
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "startTime": "08:00",
+          "endTime": "20:00"
+        }
+      }
+    }
+  ]
+}

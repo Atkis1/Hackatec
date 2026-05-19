@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIREN – Regulación Energética Inteligente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link rel="icon" href="/img/logo.png" type="image/png" />
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="app">
+      <div id="sidebar-backdrop" class="sidebar-backdrop" aria-hidden="true"></div>
+      <aside id="sidebar" class="sidebar" aria-label="Menú principal">
+        <button type="button" id="btn-sidebar-close" class="sidebar-close" aria-label="Cerrar menú">
+          ×
+        </button>
+        <div class="brand">
+          <img
+            src="/img/logo.png"
+            alt="Logo SIREN"
+            class="brand-logo"
+            width="140"
+            height="156"
+          />
+          <div class="brand-text">
+            <strong class="brand-title">SIREN</strong>
+            <p class="brand-subtitle">
+              Sistema Inteligente de Regulación Energética
+            </p>
+          </div>
+        </div>
+        <nav class="nav">
+          <button class="nav-btn active" data-view="dashboard">Panel central</button>
+          <button class="nav-btn" data-view="areas">Áreas y control</button>
+          <button class="nav-btn" data-view="expert">Sistema experto</button>
+          <button class="nav-btn" data-view="alerts">Alertas</button>
+          <button class="nav-btn" data-view="reports">Reportes</button>
+          <button class="nav-btn" data-view="meters">Medidores IoT</button>
+        </nav>
+        <footer class="sidebar-foot">
+          <p><span class="live-dot"></span> En vivo</p>
+        </footer>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <button
+            type="button"
+            id="btn-sidebar-open"
+            class="sidebar-toggle"
+            aria-label="Abrir menú de navegación"
+            aria-expanded="false"
+            aria-controls="sidebar"
+          >
+            <span class="sidebar-toggle-bar"></span>
+            <span class="sidebar-toggle-bar"></span>
+            <span class="sidebar-toggle-bar"></span>
+          </button>
+          <div class="topbar-head">
+            <h1 id="view-title">Panel central</h1>
+            <p id="site-name" class="site-subtitle hidden" aria-live="polite"></p>
+          </div>
+          <div class="topbar-toolbar">
+            <div class="toolbar-filters">
+              <select
+                id="building-select"
+                class="toolbar-control toolbar-control--building"
+                aria-label="Edificio activo"
+              ></select>
+              <select id="floor-filter" class="toolbar-control" aria-label="Filtrar por piso">
+                <option value="">Todos los pisos</option>
+              </select>
+            </div>
+            <div class="toolbar-actions">
+              <button
+                type="button"
+                id="btn-alert-bell"
+                class="toolbar-control toolbar-btn toolbar-btn--bell"
+                aria-label="Ver alertas"
+                title="Alertas"
+              >
+                <svg class="toolbar-icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm7-6V11a7 7 0 0 0-5-6.71V3.5a2 2 0 1 0-4 0v.79A7 7 0 0 0 5 11v5l-2 2v1h18v-1l-2-2Z"
+                  />
+                </svg>
+                <span id="alert-badge" class="alert-badge hidden">0</span>
+              </button>
+              <button
+                type="button"
+                id="btn-alert-sound"
+                class="toolbar-control toolbar-btn toolbar-btn--sound"
+                aria-label="Sonido de alertas activado"
+                title="Silenciar alertas"
+              >
+                <svg class="toolbar-icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M3 9v6h4l5 5V4L7 9H3zm7 3.5v3h2v-3h-2zm4.24-1.76a6.5 6.5 0 0 1 0 9.52l1.42 1.42a8 8 0 0 0 0-12.36l-1.42 1.42zm2.83-2.83a10.5 10.5 0 0 1 0 14.86l1.41 1.41a12 12 0 0 0 0-17.68l-1.41 1.41z"
+                  />
+                </svg>
+              </button>
+              <button type="button" id="btn-refresh" class="toolbar-control toolbar-btn">
+                Actualizar
+              </button>
+              <button
+                type="button"
+                id="btn-edit-building-name"
+                class="toolbar-control toolbar-btn toolbar-btn--edit"
+              >
+                Editar edificio
+              </button>
+              <div class="toolbar-meta" aria-label="Estado del sistema">
+                <span id="sync-status" class="sync-status">—</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        
+        <section id="view-dashboard" class="view active dashboard-layout">
+          <div class="panel building-panel panel--with-photo" id="building-panel">
+            <div class="panel-head panel-head--tip">
+              <h2>Gestión de edificios</h2>
+              <div class="panel-head-actions">
+                <button type="button" class="tip-trigger" aria-label="Ayuda sobre edificios"><span class="tip-trigger-icon" aria-hidden="true">i</span></button>
+                <button type="button" id="btn-new-building" class="btn btn-primary btn-sm">+ Nuevo edificio</button>
+              </div>
+              <div class="hover-tip hover-tip--wide" role="tooltip">
+                Nombre libre, tipo de edificio y pisos. La tarifa y los kWh se sugieren según los equipos; puede ajustarlos o usar «Usar sugerida» / «Usar sugerido».
+              </div>
+            </div>
+            <div class="panel-split">
+              <form id="building-form" class="building-form panel-split__main">
+              <div class="form-section form-row">
+                <h3 class="form-section-title">Identificación</h3>
+                <div class="form-field">
+                  <label for="bf-name">Nombre del edificio</label>
+                  <input type="text" id="bf-name" class="input" required />
+                </div>
+              </div>
+              <div class="form-section form-row form-row-3">
+                <h3 class="form-section-title">Configuración</h3>
+                <div class="form-field">
+                  <label for="bf-type">Tipo de edificio</label>
+                  <select id="bf-type" class="select"></select>
+                </div>
+                <div class="form-field">
+                  <label for="bf-measurement">Medición</label>
+                  <select id="bf-measurement" class="select">
+                    <option value="rooms">Por habitaciones / áreas</option>
+                    <option value="sqm">Por metros cuadrados (m²)</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="bf-cfe-zone">Zona climática CFE</label>
+                  <select id="bf-cfe-zone" class="select" title="Subsidio estacional y límite antes de tarifa DAC">
+                    <option value="1">Zona 1 — Centro y altiplano</option>
+                    <option value="1A">Zona 1A — Muy cálida</option>
+                    <option value="1B">Zona 1B — Cálida</option>
+                    <option value="1C" selected>Zona 1C — Litoral cálido</option>
+                    <option value="1D">Zona 1D — Templada costera</option>
+                    <option value="1E">Zona 1E — Templada</option>
+                    <option value="1F">Zona 1F — Fría</option>
+                  </select>
+                  <p class="field-hint field-hint--compact" id="bf-cfe-zone-hint">Ayuda a estimar el subsidio de verano y avisa cuando te acerques a la tarifa DAC.</p>
+                </div>
+              </div>
+              <div class="form-section form-grid form-grid--2" id="bf-kwh-row">
+                <h3 class="form-section-title form-section-title--span">Parámetros energéticos</h3>
+                <div class="form-field field-suggest">
+                  <label for="bf-tariff">Tarifa eléctrica (MXN/kWh)</label>
+                  <div class="input-suggest-row">
+                    <input type="number" id="bf-tariff" class="input" step="0.01" min="0" />
+                    <button type="button" id="btn-suggest-tariff" class="btn btn-ghost btn-sm">Usar sugerida</button>
+                  </div>
+                  <p class="field-hint" id="bf-tariff-hint"></p>
+                </div>
+                <div id="bf-kwh-rooms-wrap" class="form-field field-suggest">
+                  <label for="bf-kwh-room">kWh promedio por área / día</label>
+                  <div class="input-suggest-row">
+                    <input type="number" id="bf-kwh-room" class="input" step="0.1" min="1" />
+                    <button type="button" id="btn-suggest-kwh" class="btn btn-ghost btn-sm">Usar sugerido</button>
+                  </div>
+                  <p class="field-hint" id="bf-kwh-hint"></p>
+                </div>
+                <div id="bf-kwh-sqm-wrap" class="form-field field-suggest hidden">
+                  <label for="bf-kwh-sqm">kWh por m² / día</label>
+                  <div class="input-suggest-row">
+                    <input type="number" id="bf-kwh-sqm" class="input" step="0.01" min="0.1" />
+                    <button type="button" id="btn-suggest-kwh-sqm" class="btn btn-ghost btn-sm">Usar sugerido</button>
+                  </div>
+                  <p class="field-hint" id="bf-kwh-sqm-hint"></p>
+                </div>
+              </div>
+              <div class="form-section form-row">
+                <h3 class="form-section-title">Equipos eléctricos</h3>
+                <div class="form-field">
+                  <label for="bf-appliances-trigger" class="label-secondary">Sistemas instalados</label>
+                  <div id="bf-appliances" class="appliance-select">
+                  <button
+                    type="button"
+                    id="bf-appliances-trigger"
+                    class="appliance-select-trigger input"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-controls="bf-appliances-panel"
+                  >
+                    <span id="bf-appliances-label" class="appliance-select-label">Seleccionar equipos…</span>
+                    <span class="appliance-select-chevron" aria-hidden="true"></span>
+                  </button>
+                  <div
+                    id="bf-appliances-panel"
+                    class="appliance-select-panel"
+                    role="listbox"
+                    aria-multiselectable="true"
+                    hidden
+                  ></div>
+                </div>
+                </div>
+              </div>
+              <div class="form-section floors-editor">
+                <div class="floors-head">
+                  <h3>Pisos y áreas</h3>
+                  <button type="button" id="btn-add-floor" class="btn btn-ghost btn-sm">+ Piso</button>
+                </div>
+                <div id="floors-list" class="floors-list"></div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar edificio</button>
+                <button type="button" id="btn-delete-building" class="btn btn-ghost btn-danger">Eliminar</button>
+              </div>
+            </form>
+            <figure class="panel-photo panel-photo--aside" data-building-photo-wrap>
+              <img
+                data-building-photo
+                data-photo-role="building"
+                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=640&q=80"
+                alt="Edificio"
+                width="640"
+                height="427"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="panel-photo__caption" data-building-photo-caption>Uso mixto · gestión y monitoreo energético</figcaption>
+            </figure>
+            </div>
+          </div>
+
+          <div class="panel measurement-panel" id="measurement-panel">
+            <div class="panel-head ms-head panel-head--tip">
+              <h2>Medición en tiempo real</h2>
+              <div class="panel-head-actions">
+                <button type="button" class="tip-trigger" aria-label="Ayuda medición"><span class="tip-trigger-icon" aria-hidden="true">i</span></button>
+                <span id="ms-status-badge" class="ms-status-badge status-paused">—</span>
+              </div>
+              <div class="hover-tip hover-tip--wide" role="tooltip">
+                Inicie o detenga la medición para acumular kWh y costo en las gráficas. La potencia (kW) se muestra en vivo en todo momento.
+              </div>
+            </div>
+            <p id="ms-status-detail" class="ms-status-detail"></p>
+            <p id="ms-building-hint" class="ms-building-hint hidden" role="status"></p>
+            <p id="ms-schedule-notice" class="ms-schedule-notice hidden" role="alert"></p>
+            <div id="ms-times" class="ms-times"></div>
+            <div id="ms-manual-actions" class="ms-actions">
+              <button type="button" id="btn-ms-reset" class="btn btn-primary btn-sm">
+                Reiniciar e iniciar
+              </button>
+              <button type="button" id="btn-ms-start" class="btn btn-ghost btn-sm">Iniciar</button>
+              <button type="button" id="btn-ms-stop" class="btn btn-ghost btn-sm">Detener</button>
+            </div>
+            <div class="ms-schedule-block">
+              <label class="ms-schedule-toggle">
+                <input type="checkbox" id="ms-schedule-enabled" />
+                Activar automáticamente según horario
+              </label>
+              <div id="ms-schedule-fields" class="ms-schedule-fields hidden">
+                <p class="hint">Días y franja horaria (hora local). Al entrar en la ventana, se reinicia el contador del día.</p>
+                <div class="ms-days" role="group" aria-label="Días de la semana">
+                  <label><input type="checkbox" class="ms-day" value="1" /> Lun</label>
+                  <label><input type="checkbox" class="ms-day" value="2" /> Mar</label>
+                  <label><input type="checkbox" class="ms-day" value="3" /> Mié</label>
+                  <label><input type="checkbox" class="ms-day" value="4" /> Jue</label>
+                  <label><input type="checkbox" class="ms-day" value="5" /> Vie</label>
+                  <label><input type="checkbox" class="ms-day" value="6" /> Sáb</label>
+                  <label><input type="checkbox" class="ms-day" value="0" /> Dom</label>
+                </div>
+                <div class="ms-time-row">
+                  <label>Desde <input type="time" id="ms-start-time" class="input" value="08:00" /></label>
+                  <label>Hasta <input type="time" id="ms-end-time" class="input" value="20:00" /></label>
+                </div>
+                <button type="button" id="btn-ms-save-schedule" class="btn btn-secondary btn-sm">
+                  Guardar horario
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel automation-panel" id="automation-panel">
+            <div class="panel-head panel-head--tip">
+              <h2>Automatización</h2>
+              <div class="panel-head-actions">
+                <button type="button" class="tip-trigger" aria-label="Ayuda automatización"><span class="tip-trigger-icon" aria-hidden="true">i</span></button>
+                <span id="automation-status" class="ms-status-badge status-paused">—</span>
+              </div>
+              <div class="hover-tip" role="tooltip">
+                Reglas de demostración: limitan sobrecargas o apagan servicios en picos de demanda.
+              </div>
+            </div>
+            <div id="automation-rules-list" class="automation-rules"></div>
+            <ul id="automation-log" class="automation-log"></ul>
+          </div>
+
+          <div class="kpi-grid" id="kpi-grid"></div>
+
+          <div class="panel chart-panel chart-panel-main">
+            <div class="panel-head panel-head--tip chart-panel-head">
+              <h2>Demanda total en tiempo real</h2>
+              <button type="button" class="tip-trigger" aria-label="Ayuda gráficas"><span class="tip-trigger-icon" aria-hidden="true">i</span></button>
+              <div id="chart-explainer" class="hover-tip hover-tip--wide" role="tooltip"></div>
+            </div>
+            <p class="chart-live-line" id="chart-building-label"></p>
+            <div class="charts-grid">
+              <div class="chart-box chart-box-wide">
+                <div class="chart-box-head">
+                  <h3>Potencia total</h3>
+                  <button type="button" class="tip-trigger" aria-label="Leyenda potencia"><span class="tip-trigger-icon" aria-hidden="true">i</span></button>
+                  <div class="hover-tip" role="tooltip">
+                    <strong>Naranja:</strong> kW totales (suma de zonas encendidas).
+                    <strong>Verde:</strong> costo acumulado hoy en pesos según tu tarifa.
+                  </div>
+                </div>
+                <canvas id="chart-demand-cost"></canvas>
+              </div>
+              <div class="chart-box">
+                <div class="chart-box-head">
+                  <h3>Voltaje de red</h3>
+                  <button type="button" class="tip-trigger" aria-label="Leyenda voltaje"><span class="tip-trigger-icon" aria-hidden="true">i</span></button>
+                  <div class="hover-tip" role="tooltip">
+                    Promedio de voltaje (V) en la red simulada. En México suele rondar los 127 V.
+                  </div>
+                </div>
+                <canvas id="chart-voltage"></canvas>
+              </div>
+              <div class="chart-box">
+                <div class="chart-box-head">
+                  <h3>Factor de potencia</h3>
+                  <button type="button" class="tip-trigger" aria-label="Leyenda FP"><span class="tip-trigger-icon" aria-hidden="true">i</span></button>
+                  <div class="hover-tip" role="tooltip">
+                    Escala de 0 a 1: cuánto más cercano a 1, mayor es el aprovechamiento de la energía eléctrica.
+                  </div>
+                </div>
+                <canvas id="chart-power-factor"></canvas>
+              </div>
+              <div class="chart-box chart-box-wide">
+                <div class="chart-box-head">
+                  <h3>Por piso</h3>
+                  <button type="button" class="tip-trigger" aria-label="Leyenda pisos"><span class="tip-trigger-icon" aria-hidden="true">i</span></button>
+                  <div class="hover-tip" role="tooltip">
+                    Barras por piso: kW actuales y costo estimado acumulado hoy en MXN.
+                  </div>
+                </div>
+                <canvas id="chart-floors"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="floor-grid" id="floor-cards"></div>
+        </section>
+
+        <section id="view-areas" class="view">
+          <div class="panel panel--with-photo">
+            <div class="panel-head panel-head--tip">
+              <h2>Control por área</h2>
+              <button type="button" class="tip-trigger" aria-label="Ayuda áreas"><span class="tip-trigger-icon" aria-hidden="true">i</span></button>
+              <div class="hover-tip" role="tooltip">
+                Encienda, apague o defina un tope de kW por zona. Los cambios se reflejan al instante en medidores y gráficas.
+              </div>
+            </div>
+            <div class="panel-split">
+              <div class="panel-split__main">
+                <p class="hint areas-context" id="areas-context"></p>
+                <div id="areas-table" class="areas-table"></div>
+              </div>
+              <figure class="panel-photo panel-photo--aside" data-building-photo-wrap>
+                <img
+                  data-building-photo
+                  data-photo-role="areas"
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=640&q=80"
+                  alt="Edificio"
+                  width="640"
+                  height="427"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="panel-photo__caption" data-building-photo-caption>Uso mixto · control por zona</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-expert" class="view">
+          <div class="panel expert-summary-panel" id="expert-summary"></div>
+          <div class="panel expert-forecast-panel">
+            <div class="panel-head panel-head--tip">
+              <h2>Pronóstico de demanda</h2>
+              <button type="button" class="tip-trigger" aria-label="Ayuda pronóstico"><span class="tip-trigger-icon" aria-hidden="true">i</span></button>
+              <div class="hover-tip hover-tip--wide" role="tooltip">
+                kW previstos para las próximas horas según el edificio activo. La línea base se compara con el consumo habitual.
+              </div>
+            </div>
+            <p class="chart-live-line" id="expert-forecast-caption">Edificio activo y medición en tiempo real.</p>
+            <div class="chart-surface chart-surface--tip">
+              <canvas id="chart-expert-forecast" height="140"></canvas>
+            </div>
+          </div>
+          <div class="expert-grid" id="expert-content"></div>
+        </section>
+
+        <section id="view-alerts" class="view">
+          <div id="alerts-cfe-banner" class="cfe-tariff-banner hidden"></div>
+          <div class="panel alerts-panel panel--with-photo">
+            <div class="panel-split">
+              <div class="panel-split__main">
+                <div class="alerts-panel-head">
+                  <h2>Alertas</h2>
+                  <p id="alerts-summary" class="alerts-summary"></p>
+                </div>
+                <ul id="alerts-list" class="alerts-list"></ul>
+              </div>
+              <figure class="panel-photo panel-photo--aside" data-building-photo-wrap>
+                <img
+                  data-building-photo
+                  data-photo-role="alerts"
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=640&q=80"
+                  alt="Edificio"
+                  width="640"
+                  height="427"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="panel-photo__caption" data-building-photo-caption>Uso mixto · supervisión de instalaciones</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-reports" class="view">
+          <div class="panel panel--with-photo">
+            <h2>Reportes periódicos</h2>
+            <div class="panel-split">
+              <div class="panel-split__main">
+                <div class="report-actions">
+                  <select id="report-period" class="select">
+                    <option value="daily">Diario</option>
+                    <option value="weekly">Semanal</option>
+                    <option value="monthly">Mensual</option>
+                  </select>
+                  <a id="export-excel" class="btn btn-primary" href="/api/reports/export/excel">Exportar Excel</a>
+                  <a id="export-pdf" class="btn btn-secondary" href="/api/reports/export/pdf">Exportar PDF</a>
+                </div>
+                <div id="report-preview" class="report-preview-wrap"></div>
+                <p class="hint report-hint">
+                  Vista previa del reporte. Use los botones para descargar PDF o Excel con el logotipo SIREN y las tablas completas.
+                </p>
+              </div>
+              <figure class="panel-photo panel-photo--aside" data-building-photo-wrap>
+                <img
+                  data-building-photo
+                  data-photo-role="reports"
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=640&q=80"
+                  alt="Edificio"
+                  width="640"
+                  height="427"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="panel-photo__caption" data-building-photo-caption>Uso mixto · informes de consumo</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-meters" class="view">
+          <div class="panel panel--with-photo">
+            <h2>Medidores inteligentes (IoT)</h2>
+            <div class="panel-split">
+              <div class="panel-split__main">
+            <p class="hint meters-intro-text">
+                  Un medidor por zona del edificio activo. Lecturas en vivo (kW, V y factor de potencia) y proveedor según el tipo de zona.
+                </p>
+                <p class="hint areas-context" id="meters-context"></p>
+                <div id="meters-summary" class="meters-summary"></div>
+                <h3 class="meters-subtitle">Formas de conexión</h3>
+                <p class="hint">Protocolos asignados por tipo de zona (demo).</p>
+                <div id="providers-list" class="providers-list"></div>
+                <h3 class="meters-subtitle">Lista por zona</h3>
+                <input type="search" id="meters-search" class="input meters-search" placeholder="Buscar por zona, piso o identificador" />
+                <div id="meters-table-wrap" class="meters-table-wrap"></div>
+              </div>
+              <figure class="panel-photo panel-photo--aside" data-building-photo-wrap>
+                <img
+                  data-building-photo
+                  data-photo-role="meters"
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=640&q=80"
+                  alt="Edificio"
+                  width="640"
+                  height="427"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="panel-photo__caption" data-building-photo-caption>Uso mixto · medidores y sensores IoT</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+
+</main>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="/js/app.js" type="module"></script>
+  </body>
+</html>
